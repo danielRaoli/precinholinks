@@ -46,6 +46,49 @@ export default function RootLayout({
           `}
         </Script>
 
+        <Script id="meta-pixel-link-click" strategy="afterInteractive">
+          {`
+            (function () {
+              function buildParams(a) {
+                var params = {
+                  content_category: "whatsapp_group",
+                  destination: a.href,
+                };
+
+                var id = a.getAttribute("data-meta-id");
+                if (id) params.content_ids = [id];
+
+                var name = a.getAttribute("data-meta-name");
+                if (name) params.content_name = name;
+
+                return params;
+              }
+
+              document.addEventListener(
+                "click",
+                function (e) {
+                  var t = e.target;
+                  if (!t || !t.closest) return;
+
+                  var a = t.closest("a[data-meta-event]");
+                  if (!a) return;
+
+                  var ev = a.getAttribute("data-meta-event");
+                  if (!ev) return;
+
+                  if (typeof window === "undefined") return;
+                  if (!window.fbq) return;
+
+                  try {
+                    window.fbq("track", ev, buildParams(a));
+                  } catch (_) {}
+                },
+                { capture: true }
+              );
+            })();
+          `}
+        </Script>
+
         <noscript>
           <img
             height="1"

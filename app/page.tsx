@@ -57,6 +57,9 @@ function GroupCard({ group }: { group: Group }) {
   return (
     <a
       href={group.href}
+      data-meta-event="Lead"
+      data-meta-id={group.id}
+      data-meta-name={group.name}
       className={[
         "group relative flex w-full flex-col overflow-hidden rounded-[20px] p-4",
         "bg-gradient-to-br from-[#004C0B] to-[#145C00]",
